@@ -34,6 +34,7 @@ export function Board({ boardId }: BoardProps) {
         onUpdateTitle={(title) => updateBoardTitle(boardId, title)}
       />
       <BoardLists
+        boardId={boardId}
         listIds={listIds}
         listsMap={listsMap}
         cardsMap={cardsMap}

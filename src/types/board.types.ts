@@ -53,7 +53,7 @@ export interface BoardState {
   deleteComment: (commentId: ID) => void;
 
   /* Reordering */
-  reorderLists: (boardId: ID, fromIndex: number, toIndex: number) => void;
+  reorderLists: (boardId: ID,  listIds: string[]) => void;
   reorderCards: (listId: ID, fromIndex: number, toIndex: number) => void;
   moveCard: (
     cardId: ID,

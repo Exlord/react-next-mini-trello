@@ -226,21 +226,16 @@ export const useBoardStore = create<BoardState>()(
 
         /* ---------- Reordering ---------- */
 
-        reorderLists: (boardId, fromIndex, toIndex) =>
-          set((state) => {
-            const board = state.boards[boardId];
-            if (!board) return {};
-
-            return {
-              boards: {
-                ...state.boards,
-                [boardId]: {
-                  ...board,
-                  listIds: reorder(board.listIds, fromIndex, toIndex)
-                }
+        reorderLists: (boardId, listIds) =>
+          set((state) => ({
+            boards: {
+              ...state.boards,
+              [boardId]: {
+                ...state.boards[boardId],
+                listIds
               }
-            };
-          }),
+            }
+          })),
 
         reorderCards: (listId, fromIndex, toIndex) =>
           set((state) => {

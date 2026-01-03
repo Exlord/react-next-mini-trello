@@ -21,6 +21,11 @@
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 .title {

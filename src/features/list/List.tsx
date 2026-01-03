@@ -7,6 +7,8 @@ import styles from './List.module.scss';
 import { useBoardStore } from '@/stores';
 import { ListActions } from '@/features/list/ListActions';
 import { ThreeDotsIcon } from '@/shared/icons/ThreeDotsIcon';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface CardModel {
   id: string;
@@ -34,6 +36,17 @@ export function List({
                        onAddCard
                      }: ListProps) {
 
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition
+  } = useSortable({ id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  };
   const [open, setOpen] = useState(false);
   const cards = useMemo(() => {
     return cardIds.map((id) => cardsMap[id]);
@@ -44,9 +57,17 @@ export function List({
   );
 
   return (
-    <section className={styles.list}>
+
+
+
+
+    <section className={styles.list} ref={setNodeRef}
+             style={style}>
       {/* ===== Header ===== */}
-      <header className={styles.header}>
+      <header className={styles.header}
+              {...attributes}
+              {...listeners}
+              aria-label="Drag list">
         <EditableText
           value={title}
           as="h3"
