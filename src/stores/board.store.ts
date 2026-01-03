@@ -11,7 +11,7 @@ export const useBoardStore = create<BoardState>()(
   devtools(
     persist(
       (set, get) => ({
-        boards: {'My Board':{id:'My Board',title:'My Board',listIds:[]}},
+        boards: { 'My Board': { id: 'My Board', title: 'My Board', listIds: [] } },
         lists: {},
         cards: {},
         comments: {},
@@ -104,39 +104,6 @@ export const useBoardStore = create<BoardState>()(
               }
             }
           })),
-
-        deleteList: (listId) => {
-          const { lists, cards, comments, boards } = get();
-          const list = lists[listId];
-
-          if (!list) return;
-
-          const cardIds = list.cardIds;
-          const commentIds = cardIds.flatMap((id) => cards[id]?.commentIds ?? []);
-
-          set(() => {
-            const newLists = { ...lists };
-            const newCards = { ...cards };
-            const newComments = { ...comments };
-            const newBoards = { ...boards };
-
-            delete newLists[listId];
-            cardIds.forEach((id) => delete newCards[id]);
-            commentIds.forEach((id) => delete newComments[id]);
-
-            newBoards[list.boardId] = {
-              ...newBoards[list.boardId],
-              listIds: newBoards[list.boardId].listIds.filter((id) => id !== listId)
-            };
-
-            return {
-              lists: newLists,
-              cards: newCards,
-              comments: newComments,
-              boards: newBoards
-            };
-          });
-        },
 
         /* ---------- Card ---------- */
 
@@ -343,7 +310,48 @@ export const useBoardStore = create<BoardState>()(
             }
           }));
           return id;
-        }
+        },
+
+        deleteList: (listId) =>
+          set((state) => {
+            const list = state.lists[listId];
+
+            // remove cards belonging to the list
+            const newCards = { ...state.cards };
+            list.cardIds.forEach((id) => delete newCards[id]);
+
+            const { [listId]: _, ...restLists } = state.lists;
+
+            return {
+              lists: restLists,
+              cards: newCards,
+              boards: {
+                ...state.boards,
+                [list.boardId]: {
+                  ...state.boards[list.boardId],
+                  listIds: state.boards[list.boardId].listIds.filter(
+                    (id) => id !== listId
+                  )
+                }
+              }
+            };
+          }),
+
+        clearListCards: (listId) =>
+          set((state) => ({
+            cards: Object.fromEntries(
+              Object.entries(state.cards).filter(
+                ([id]) => !state.lists[listId].cardIds.includes(id)
+              )
+            ),
+            lists: {
+              ...state.lists,
+              [listId]: {
+                ...state.lists[listId],
+                cardIds: []
+              }
+            }
+          }))
 
       }),
       {

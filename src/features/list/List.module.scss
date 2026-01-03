@@ -14,6 +14,13 @@
 
 .header {
   margin-bottom: 8px;
+  padding: 0.5rem 0.7rem 0rem 0.5rem;
+  width: 100%;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
 }
 
 .title {
@@ -56,4 +63,16 @@
 
 .addCard:hover {
   background: rgba(9, 30, 66, 0.08);
+}
+
+
+.list__menu__wrapper {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 100;
 }

@@ -1,9 +1,12 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { EditableText } from '@/shared/components/editable-text/EditableText';
 import { Card } from '@/features/card/Card';
 import styles from './List.module.scss';
+import { useBoardStore } from '@/stores';
+import { ListActions } from '@/features/list/ListActions';
+import { ThreeDotsIcon } from '@/shared/icons/ThreeDotsIcon';
 
 interface CardModel {
   id: string;
@@ -30,9 +33,15 @@ export function List({
                        onUpdateCardTitle,
                        onAddCard
                      }: ListProps) {
+
+  const [open, setOpen] = useState(false);
   const cards = useMemo(() => {
     return cardIds.map((id) => cardsMap[id]);
   }, [cardIds, cardsMap]);
+  const deleteList = useBoardStore((state) => state.deleteList);
+  const clearListCards = useBoardStore(
+    (state) => state.clearListCards
+  );
 
   return (
     <section className={styles.list}>
@@ -45,6 +54,25 @@ export function List({
           inputClassName={styles.titleInput}
           onCommit={(value) => onUpdateTitle(id, value)}
         />
+
+        <div className={styles.list__menu__wrapper}>
+          <button
+            className="list__menu"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-haspopup="menu"
+          >
+            <ThreeDotsIcon />
+          </button>
+
+          {open && (
+            <ListActions
+              onClose={() => setOpen(false)}
+              onDeleteList={() => deleteList(id)}
+              onClearCards={() => clearListCards(id)}
+            />
+          )}
+        </div>
       </header>
 
       {/* ===== Cards ===== */}

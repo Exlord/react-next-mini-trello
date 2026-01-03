@@ -1,0 +1,38 @@
+.dropdown__warning__wrapper {
+  padding: 0.5rem 0.5rem;
+}
+
+.btn__danger {
+
+  margin-right: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+  font-size: 0.875rem;
+  border: 0px;
+  background-color: rgb(207, 81, 61);
+  box-shadow: rgb(110, 47, 26) 0px 1px 0px 0px;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+}
+
+.dropdown__warning {
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #555;
+}
+
+.dropdown__item {
+  display: block;
+  padding: 0.3rem 0.75rem;
+  font-weight: 700;
+  transition: 0.2s ease-in;
+  text-align: left;
+
+  &:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(46, 126, 175);
+  }
+}

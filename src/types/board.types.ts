@@ -63,4 +63,5 @@ export interface BoardState {
   ) => void;
 
   ensureBoardExists: (defaultTitle: string) => string;
+  clearListCards: (listId: ID) => void;
 }
