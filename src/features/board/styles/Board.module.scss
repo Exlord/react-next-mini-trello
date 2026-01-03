@@ -1,0 +1,55 @@
+
+.board {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 16px;
+  position: relative;
+  min-height: 100vh;
+  background-color: rgb(46, 126, 175);
+  transition: background-color 0.2s ease-in;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.title {
+  cursor: pointer;
+  max-width: calc(-9rem + 100vw);
+  margin: 0px;
+  padding: 0.5rem;
+  font-size: 1.3rem;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.titleInput {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.lists {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.listPlaceholder {
+  min-width: 260px;
+  padding: 12px;
+  background: #f3f4f6;
+  border-radius: 6px;
+}
+
+.empty {
+  padding: 24px;
+  color: #6b7280;
+}

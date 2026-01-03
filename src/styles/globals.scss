@@ -1,0 +1,12 @@
+@use '_reset.scss';
+@use '_variables.scss';
+@use '_functions.scss';
+@use "_mixins.scss";
+
+body{
+  margin: 0px;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  color: rgb(64, 66, 75);
+  letter-spacing: 0.5px;
+}
