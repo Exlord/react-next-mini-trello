@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { nanoid } from 'nanoid';
 import type { Board, List, Card, Comment, ID } from '@/stores/types/board.types';
+import { reorder } from '@/shared/utils/array';
 
 interface BoardState {
   boards: Record<ID, Board>;
@@ -27,6 +28,17 @@ interface BoardState {
   addComment: (cardId: ID, text: string) => ID;
   updateCommentText: (commentId: ID, text: string) => void;
   deleteComment: (commentId: ID) => void;
+
+  /* Reordering */
+  reorderLists: (boardId: ID, fromIndex: number, toIndex: number) => void;
+  reorderCards: (listId: ID, fromIndex: number, toIndex: number) => void;
+  moveCard: (
+    cardId: ID,
+    fromListId: ID,
+    toListId: ID,
+    toIndex: number
+  ) => void;
+
 }
 
 export const useBoardStore = create<BoardState>((set, get) => ({
@@ -275,4 +287,75 @@ export const useBoardStore = create<BoardState>((set, get) => ({
       };
     });
   },
+
+  /* ---------- Reordering ---------- */
+
+  reorderLists: (boardId, fromIndex, toIndex) =>
+    set((state) => {
+      const board = state.boards[boardId];
+      if (!board) return {};
+
+      return {
+        boards: {
+          ...state.boards,
+          [boardId]: {
+            ...board,
+            listIds: reorder(board.listIds, fromIndex, toIndex),
+          },
+        },
+      };
+    }),
+
+  reorderCards: (listId, fromIndex, toIndex) =>
+    set((state) => {
+      const list = state.lists[listId];
+      if (!list) return {};
+
+      return {
+        lists: {
+          ...state.lists,
+          [listId]: {
+            ...list,
+            cardIds: reorder(list.cardIds, fromIndex, toIndex),
+          },
+        },
+      };
+    }),
+
+  moveCard: (cardId, fromListId, toListId, toIndex) =>
+    set((state) => {
+      const card = state.cards[cardId];
+      if (!card) return {};
+
+      const fromList = state.lists[fromListId];
+      const toList = state.lists[toListId];
+
+      if (!fromList || !toList) return {};
+
+      const newFromIds = fromList.cardIds.filter((id) => id !== cardId);
+      const newToIds = [...toList.cardIds];
+      newToIds.splice(toIndex, 0, cardId);
+
+      return {
+        cards: {
+          ...state.cards,
+          [cardId]: {
+            ...card,
+            listId: toListId,
+          },
+        },
+        lists: {
+          ...state.lists,
+          [fromListId]: {
+            ...fromList,
+            cardIds: newFromIds,
+          },
+          [toListId]: {
+            ...toList,
+            cardIds: newToIds,
+          },
+        },
+      };
+    }),
+
 }));
