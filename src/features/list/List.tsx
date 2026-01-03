@@ -9,6 +9,12 @@ import { ListActions } from '@/features/list/ListActions';
 import { ThreeDotsIcon } from '@/shared/icons/ThreeDotsIcon';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import {
+  SortableContext,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable';
+import { PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { isInteractiveElement } from '@/shared/utils/drag';
 
 interface CardModel {
   id: string;
@@ -55,6 +61,13 @@ export function List({
   const clearListCards = useBoardStore(
     (state) => state.clearListCards
   );
+  const guardedListeners = {
+    ...listeners,
+    onPointerDown(e: React.PointerEvent) {
+      if (isInteractiveElement(e.target as HTMLElement)) return;
+      listeners?.onPointerDown?.(e);
+    }
+  };
 
   return (
 
@@ -66,7 +79,7 @@ export function List({
       {/* ===== Header ===== */}
       <header className={styles.header}
               {...attributes}
-              {...listeners}
+              {...guardedListeners}
               aria-label="Drag list">
         <EditableText
           value={title}
@@ -97,16 +110,23 @@ export function List({
       </header>
 
       {/* ===== Cards ===== */}
-      <div className={styles.cards}>
-        {cards.map((card) => (
-          <Card
-            key={card.id}
-            id={card.id}
-            title={card.title}
-            onUpdateTitle={onUpdateCardTitle}
-          />
-        ))}
-      </div>
+      <SortableContext
+        items={cardIds}
+        strategy={verticalListSortingStrategy}
+      >
+        <div className={styles.cards}>
+          {cards.map((card) => (
+            <Card
+              listId={id}
+              key={card.id}
+              id={card.id}
+              title={card.title}
+              onUpdateTitle={onUpdateCardTitle}
+            />
+          ))}
+        </div>
+      </SortableContext>
+
 
       {/* ===== Add Card ===== */}
       <footer className={styles.footer}>

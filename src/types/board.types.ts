@@ -54,12 +54,18 @@ export interface BoardState {
 
   /* Reordering */
   reorderLists: (boardId: ID,  listIds: string[]) => void;
-  reorderCards: (listId: ID, fromIndex: number, toIndex: number) => void;
-  moveCard: (
-    cardId: ID,
-    fromListId: ID,
-    toListId: ID,
-    toIndex: number
+// board.store.ts
+  reorderCards: (
+    listId: string,
+    activeIndex: number,
+    overIndex: number
+  ) => void;
+
+  moveCardBetweenLists: (
+    sourceListId: string,
+    targetListId: string,
+    activeIndex: number,
+    overIndex: number
   ) => void;
 
   ensureBoardExists: (defaultTitle: string) => string;

@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import type { BoardState } from '@/types/board.types';
 import { reorder } from '@/shared/utils/array';
 import { persist, createJSONStorage, devtools } from 'zustand/middleware';
+import { arrayMove } from '@dnd-kit/sortable';
 
 // Increment this when schema changes.
 const BOARD_STORE_VERSION = 1;
@@ -237,56 +238,30 @@ export const useBoardStore = create<BoardState>()(
             }
           })),
 
-        reorderCards: (listId, fromIndex, toIndex) =>
+        reorderCards: (listId, activeIndex, overIndex) =>
           set((state) => {
             const list = state.lists[listId];
-            if (!list) return {};
+            list.cardIds = arrayMove(list.cardIds, activeIndex, overIndex);
 
-            return {
-              lists: {
-                ...state.lists,
-                [listId]: {
-                  ...list,
-                  cardIds: reorder(list.cardIds, fromIndex, toIndex)
-                }
-              }
-            };
+            return state;
           }),
 
-        moveCard: (cardId, fromListId, toListId, toIndex) =>
+        moveCardBetweenLists: (
+          sourceListId,
+          targetListId,
+          activeIndex,
+          overIndex
+        ) =>
           set((state) => {
-            const card = state.cards[cardId];
-            if (!card) return {};
+            const sourceList = state.lists[sourceListId];
+            const targetList = state.lists[targetListId];
 
-            const fromList = state.lists[fromListId];
-            const toList = state.lists[toListId];
+            const [movedCardId] = sourceList.cardIds.splice(activeIndex, 1);
+            targetList.cardIds.splice(overIndex, 0, movedCardId);
 
-            if (!fromList || !toList) return {};
+            state.cards[movedCardId].listId = targetListId;
 
-            const newFromIds = fromList.cardIds.filter((id) => id !== cardId);
-            const newToIds = [...toList.cardIds];
-            newToIds.splice(toIndex, 0, cardId);
-
-            return {
-              cards: {
-                ...state.cards,
-                [cardId]: {
-                  ...card,
-                  listId: toListId
-                }
-              },
-              lists: {
-                ...state.lists,
-                [fromListId]: {
-                  ...fromList,
-                  cardIds: newFromIds
-                },
-                [toListId]: {
-                  ...toList,
-                  cardIds: newToIds
-                }
-              }
-            };
+            return state;
           }),
 
         ensureBoardExists: (defaultTitle: string) => {

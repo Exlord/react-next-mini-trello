@@ -19,7 +19,7 @@ export function EditableText({
                                value,
                                onCommit,
                                placeholder = 'Untitled',
-                               className,
+                               className = 'editable-text-el',
                                inputClassName,
                                as = 'span',
                                disabled = false,
