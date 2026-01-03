@@ -13,7 +13,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 React , Next, zustand, @dnd-kit
 
 ---
+## Note
+I did not have much time and was busy with life , I could only spare less than 8 hours for this.
 
+---
 
 <pre dir="rtl">
 📝 متن سوال مصاحبه - پروژه Trello Clone
