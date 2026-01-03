@@ -1,0 +1,59 @@
+.list {
+  padding: 8px;
+
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  max-height: 83vh;
+  width: 16rem;
+  margin: 0px 0.5rem;
+  background-color: rgb(223, 225, 230);
+  border-radius: 0.2rem;
+}
+
+.header {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.titleInput {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 30px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.addCard {
+  width: 100%;
+  padding: 6px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+  color: #5e6c84;
+  margin-top: 10px;
+}
+
+.addCard:hover {
+  background: rgba(9, 30, 66, 0.08);
+}

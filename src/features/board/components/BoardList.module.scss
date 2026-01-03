@@ -1,0 +1,34 @@
+.boardLists {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  align-items: flex-start;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  flex-shrink: 0;
+  max-width: 100vw;
+}
+
+.addListBtnWrapper {
+  flex-shrink: 0;
+  width: 16rem;
+  margin: 0px 0.5rem;
+}
+
+.addList {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  color: rgb(255, 255, 255);
+  text-align: left;
+  border-radius: 0.2rem;
+  background-color: rgba(0, 0, 0, 0.12);
+  transition: background-color 0.2s ease-in;
+  cursor: pointer;
+}
+
+.addList:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

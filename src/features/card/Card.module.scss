@@ -1,0 +1,39 @@
+.card {
+
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 0px;
+  transition: background-color 0.2s ease-in;
+}
+
+.title {
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.titleInput {
+  font-size: 14px;
+}
+
+.commentBtnWrapper {
+  display: flex;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+}
+
+.commentsBtn {
+  margin-top: 8px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.2rem;
+  background-color: rgb(223, 225, 230);
+  color: rgb(23, 43, 77);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+}

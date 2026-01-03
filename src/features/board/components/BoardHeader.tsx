@@ -1,7 +1,7 @@
 'use client';
 
 import { EditableText } from '@/shared/components/editable-text/EditableText';
-import styles from '../styles/Board.module.scss';
+import styles from './Board.module.scss';
 
 interface Props {
   title: string;

@@ -1,0 +1,42 @@
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+
+}
+
+.comments__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comments__footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.comments__add {
+  border: none;
+
+  align-self: flex-end;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.2rem;
+  background-color: rgb(90, 172, 68);
+  color: rgb(255, 255, 255);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+}
+
+.comments__textarea {
+  resize: vertical;
+  min-height: 60px;
+  padding: 0.6rem;
+  border-radius: 0.2rem;
+  border: 1px solid rgb(223, 225, 230);
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  background-color: rgb(255, 255, 255);
+}
